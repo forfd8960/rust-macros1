@@ -115,3 +115,93 @@ fn main() {
 "0i32 + 9 == 9i32" and "true" is true
 "true" or "false" is true
 ```
+
+## Find Main
+
+```sh
+➜  rust-macros1 git:(main) cargo expand --bin find_min
+    Checking rust-macros1 v0.1.0 
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.20s
+
+#![feature(prelude_import)]
+#[prelude_import]
+use std::prelude::rust_2021::*;
+#[macro_use]
+extern crate std;
+fn main() {
+    {
+        ::std::io::_print(format_args!("find_min!(1)  = {0}\n", 1));
+    };
+    {
+        ::std::io::_print(
+            format_args!(
+                "find_min!(100, 3, 9)  = {0}\n",
+                std::cmp::min(100, std::cmp::min(3, 9)),
+            ),
+        );
+    };
+    {
+        ::std::io::_print(
+            format_args!(
+                "find_min!(5, 99, 66, -1, -1024)  = {0}\n",
+                std::cmp::min(
+                    5,
+                    std::cmp::min(99, std::cmp::min(66, std::cmp::min(-1, -1024))),
+                ),
+            ),
+        );
+    };
+}
+```
+
+## Concat
+
+```sh
+➜  rust-macros1 git:(main) ✗ cargo expand --bin concat
+    Checking rust-macros1 v0.1.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.29s
+
+#![feature(prelude_import)]
+#[prelude_import]
+use std::prelude::rust_2021::*;
+#[macro_use]
+extern crate std;
+fn main() {
+    {
+        ::std::io::_print(format_args!("concat!(\"x\") = {0}\n", "x"));
+    };
+    {
+        ::std::io::_print(
+            format_args!(
+                "concat!(\"x\", \"y\") = {0}\n",
+                {
+                    let res = ::alloc::fmt::format(format_args!("{0}{1}", "x", "y"));
+                    res
+                },
+            ),
+        );
+    };
+    {
+        ::std::io::_print(
+            format_args!(
+                "concat!(\"A\", \"B\", \"C\") = {0}\n",
+                {
+                    let res = ::alloc::fmt::format(
+                        format_args!(
+                            "{0}{1}",
+                            "A",
+                            {
+                                let res = ::alloc::fmt::format(
+                                    format_args!("{0}{1}", "B", "C"),
+                                );
+                                res
+                            },
+                        ),
+                    );
+                    res
+                },
+            ),
+        );
+    };
+}
+```
