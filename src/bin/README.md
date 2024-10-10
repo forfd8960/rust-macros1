@@ -205,3 +205,34 @@ fn main() {
     };
 }
 ```
+
+## Add
+
+```sh
+➜  rust-macros1 git:(main) ✗ cargo expand --bin add
+    Checking rust-macros1 v0.1.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.39s
+
+#![feature(prelude_import)]
+#[prelude_import]
+use std::prelude::rust_2021::*;
+#[macro_use]
+extern crate std;
+fn main() {
+    {
+        ::std::io::_print(format_args!("1+2 = {0}\n", { 1 + 2 }));
+    };
+    {
+        ::std::io::_print(format_args!("add_as!(1) = {0}\n", { 0 + 1 }));
+    };
+    {
+        ::std::io::_print(format_args!("add_as!(1,2,3) = {0}\n", { 0 + 1 + 2 + 3 }));
+    };
+    {
+        ::std::io::_print(format_args!("add_as!() = {0}\n", { 0 }));
+    };
+    {
+        ::std::io::_print(format_args!("add1!(1,2,3) = {0}\n", { 1 + { 2 + 3 } }));
+    };
+}
+```
