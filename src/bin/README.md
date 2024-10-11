@@ -236,3 +236,42 @@ fn main() {
     };
 }
 ```
+
+## Timed Macro
+
+```sh
+➜  rust-macros1 git:(main) ✗ cargo expand --bin timed
+    Checking rust-macros1 v0.1.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.35s
+
+#![feature(prelude_import)]
+#[prelude_import]
+use std::prelude::rust_2021::*;
+#[macro_use]
+extern crate std;
+use std::{io, thread, time::Duration};
+use rust_macros1::timed;
+fn main() -> Result<(), io::Error> {
+    my_function()?;
+    Ok(())
+}
+fn my_function() -> Result<(), std::io::Error> {
+    let start = std::time::Instant::now();
+    let result = {
+        {
+            thread::sleep(Duration::from_millis(100));
+            {
+                ::std::io::_print(format_args!("hello my_function\n"));
+            };
+            Ok(())
+        }
+    };
+    let duration = start.elapsed();
+    {
+        ::std::io::_print(
+            format_args!("function: {0}, take: {1:?}\n", "my_function", duration),
+        );
+    };
+    result
+}
+```

@@ -33,5 +33,7 @@ fn main() {
     println!("add_as!(1,2,3) = {}", add_as!(1, 2, 3));
     println!("add_as!() = {}", add_as!());
 
+    println!("add1!(100) = {}", add1!(100));
+    println!("add1!(100, 999) = {}", add1!(100, 999));
     println!("add1!(1,2,3) = {}", add1!(1, 2, 3));
 }
