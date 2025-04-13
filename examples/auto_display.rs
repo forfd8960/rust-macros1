@@ -1,6 +1,6 @@
 use rust_macros1::AutoDisplay;
 
-#[derive(Debug, AutoDisplay)]
+#[derive(AutoDisplay)]
 struct Person {
     id: i64,
     name: String,
@@ -16,5 +16,6 @@ fn main() {
         hobby: "programming".to_string(),
     };
 
+    // Person { id: 1, name: HeisenBerg, age: 20, hobby: programming, }
     println!("{}", p);
 }

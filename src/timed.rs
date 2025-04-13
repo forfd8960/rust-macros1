@@ -1,6 +1,6 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse_macro_input, Data, DeriveInput, Fields, ItemFn};
+use syn::ItemFn;
 
 pub(crate) fn process_timed(input_fn: ItemFn) -> TokenStream {
     // let input_fn = parse_macro_input!(item as ItemFn);
