@@ -5,8 +5,11 @@
 * Dependencies
 
 `proc-macro`: Provides the necessary types and attributes for creating procedural macros.
+
 `quote`: Enables quasi-quoting, which allows constructing Rust code from within the macro.
+
 `syn`: Parses Rust code into an Abstract Syntax Tree (AST) that the macro can manipulate.
+
 `#[proc_macro_attribute]`: This attribute declares the function as a procedural macro that can be used as an attribute.
 
 * Input Parsing:
@@ -15,6 +18,7 @@
 Extracting Function Details:
 
 `fn_name`: Gets the name of the function.
+
 `fn_block`: Gets the code block of the function.
 Constructing the Expanded Code:
 

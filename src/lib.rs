@@ -1,23 +1,20 @@
 use proc_macro::TokenStream;
-use quote::quote;
+
+mod auto_display;
+mod timed;
+
+use auto_display::process_auto_display;
 use syn::{parse_macro_input, ItemFn};
+use timed::process_timed;
+
+#[proc_macro_derive(AutoDisplay, attributes(display))]
+pub fn derive_auto_display(input: TokenStream) -> TokenStream {
+    let input: syn::DeriveInput = parse_macro_input!(input as syn::DeriveInput);
+    process_auto_display(input).into()
+}
 
 #[proc_macro_attribute]
-pub fn timed(_attr: TokenStream, item: TokenStream) -> TokenStream {
-    let input_fn = parse_macro_input!(item as ItemFn);
-    let fn_name = &input_fn.sig.ident;
-    let fn_block = &input_fn.block;
-
-    let expand = quote! {
-        fn #fn_name() -> Result<(), std::io::Error> {
-            let start = std::time::Instant::now();
-            let result = { #fn_block };
-            let duration = start.elapsed();
-
-            println!("function: {}, take: {:?}", stringify!(#fn_name), duration);
-            result
-        }
-    };
-
-    TokenStream::from(expand)
+pub fn attribute_timed(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    let input: syn::ItemFn = parse_macro_input!(item as ItemFn);
+    process_timed(input).into()
 }
